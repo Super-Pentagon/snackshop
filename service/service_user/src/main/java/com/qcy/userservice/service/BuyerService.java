@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface BuyerService extends IService<Buyer> {
 
     Buyer login(Buyer buyer);
+
+    void register(Buyer buyer);
 }

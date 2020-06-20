@@ -29,14 +29,45 @@ public class BuyerServiceImpl extends ServiceImpl<BuyerMapper, Buyer> implements
             throw new QcyException(20001, "账号或者密码为空，登录失败！");
         }
         QueryWrapper<Buyer> wrapper = new QueryWrapper<>();
-        wrapper.eq("username",username);
-        Buyer buyervo =baseMapper.selectOne(wrapper);
-        if (buyervo==null){
+        wrapper.eq("username", username);
+        Buyer buyervo = baseMapper.selectOne(wrapper);
+        if (buyervo == null) {
             throw new QcyException(20001, "账号不存在");
         }
-        if (!MD5.encrypt(password).equals(buyervo.getPassword())){
+        if (!MD5.encrypt(password).equals(buyervo.getPassword())) {
             throw new QcyException(20001, "密码error");
         }
         return buyervo;
+    }
+
+    @Override
+    public void register(Buyer buyer) {
+        String username = buyer.getUsername();
+        String password = buyer.getPassword();
+        if (StringUtils.isEmpty(password)
+                || StringUtils.isEmpty(username)) {
+            throw new QcyException(20001, "注册失败");
+        }
+        //判断验证码
+       /* //获取redis验证码
+        String redisCode = redisTemplate.opsForValue().get(mobile);
+        if(!code.equals(redisCode)) {
+            throw new GuliException(20001,"注册失败");
+        }*/
+
+        //判断手机号是否重复，表里面存在相同手机号不进行添加
+        QueryWrapper<Buyer> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", username);
+        Integer count = baseMapper.selectCount(wrapper);
+        if (count > 0) {
+            throw new QcyException(20001, "注册失败");
+        }
+
+        //数据添加数据库中
+       Buyer buyervo = new Buyer();
+        buyervo.setUsername(username);
+        buyervo.setPassword(password);
+        buyervo.setAvatar("http://bpic.588ku.com/element_pic/01/58/79/95574840a476616.jpg");
+        baseMapper.insert(buyervo);
     }
 }

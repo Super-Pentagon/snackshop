@@ -35,6 +35,9 @@ public class Buyer implements Serializable {
     private String tel;
 
     private String address;
+    private String avatar;
+    private String name;
+
 
 
 }

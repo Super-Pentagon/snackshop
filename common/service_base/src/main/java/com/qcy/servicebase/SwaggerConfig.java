@@ -32,7 +32,6 @@ public class SwaggerConfig {
                 .title("商城后台API文档")
                 .description("本文档描述了商城后台微服务接口定义")
                 .version("1.0")
-                .contact(new Contact("Java", "http://baidu.com", "1715464388@qq.com"))
                 .build();
     }
 }
