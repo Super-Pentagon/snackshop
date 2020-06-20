@@ -1,8 +1,8 @@
 package com.qcy.commonutils;
 
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +32,18 @@ public class R {
         r.setCode(ResultCode.SUCCESS);
         r.setMessage("成功");
         return r;
+    }
+
+    private void setMessage(String message) {
+        this.message = message;
+    }
+
+    private void setCode(Integer code) {
+        this.code = code;
+    }
+
+    private void setSuccess(boolean b) {
+        this.success = b;
     }
 
     //失败静态方法
@@ -66,5 +78,9 @@ public class R {
     public R data(Map<String, Object> map){
         this.setData(map);
         return this;
+    }
+
+    private void setData(Map<String, Object> data) {
+        this.data = data;
     }
 }

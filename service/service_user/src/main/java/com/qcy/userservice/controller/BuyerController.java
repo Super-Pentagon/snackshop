@@ -1,15 +1,15 @@
 package com.qcy.userservice.controller;
 
 
+
+
+import com.qcy.commonutils.R;
 import com.qcy.userservice.entity.Buyer;
 import com.qcy.userservice.service.BuyerService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * <p>
@@ -19,18 +19,20 @@ import java.util.List;
  * @author CodeHunter_qcy
  * @since 2020-06-20
  */
+@Api(tags = "买家登录注册接口")
 @RestController
 @RequestMapping("/buyerservice/buyer")
+@CrossOrigin
 public class BuyerController {
     @Autowired
     private BuyerService buyerService;
-
-    @GetMapping("findAll")
-    public List<Buyer> findAll() {
-    List<Buyer> list = buyerService.list(null);
-    return list;
-
+    @PostMapping("login")
+    public R loginBuyer(@RequestBody Buyer buyer){
+        Buyer buyervo = buyerService.login(buyer);
+        return R.ok().data("buyer",buyervo);
     }
+
+
 
 }
 
