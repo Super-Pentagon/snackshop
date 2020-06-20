@@ -39,7 +39,8 @@ public class Product implements Serializable {
     private String itemid;
 
     private String purl;
-    private String name;
+
+    private String pname;
 
 
 }
