@@ -3,6 +3,8 @@ package com.qcy.userservice.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,7 +30,7 @@ public class Product implements Serializable {
     @TableId(value = "pid", type = IdType.ID_WORKER_STR)
     private String pid;
 
-    private Double price;
+    private BigDecimal price;
 
     private String sid;
 
@@ -37,6 +39,7 @@ public class Product implements Serializable {
     private String itemid;
 
     private String purl;
+    private String name;
 
 
 }
