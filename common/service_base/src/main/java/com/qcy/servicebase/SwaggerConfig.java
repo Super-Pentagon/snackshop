@@ -1,4 +1,4 @@
-package com.atguigu.servicebase;
+package com.qcy.servicebase;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +16,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
-    public Docket webApiConfig() {
+    public Docket webApiConfig(){
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("snockshop")
+                .groupName("webApi")
                 .apiInfo(webApiInfo())
                 .select()
                 .paths(Predicates.not(PathSelectors.regex("/admin/.*")))
@@ -27,11 +27,11 @@ public class SwaggerConfig {
 
     }
 
-    private ApiInfo webApiInfo() {
+    private ApiInfo webApiInfo(){
 
         return new ApiInfoBuilder()
-                .title("snockshop的后台API文档")
-                .description("本文档描述了商城微服务接口定义")
+                .title("商城后台API文档")
+                .description("本文档描述了商城后台微服务接口定义")
                 .version("1.0")
 
                 .build();
