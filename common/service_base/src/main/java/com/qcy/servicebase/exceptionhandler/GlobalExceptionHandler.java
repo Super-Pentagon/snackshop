@@ -1,7 +1,7 @@
 package com.qcy.servicebase.exceptionhandler;
 
 
-import com.atguigu.commonutils.R;
+import com.qcy.commonutils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
