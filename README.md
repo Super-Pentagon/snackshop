@@ -24,6 +24,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-https://img-blog.csdnimg.cn/20200626194912642.png
-
 ![image](https://img-blog.csdnimg.cn/20200626194912642.png)
