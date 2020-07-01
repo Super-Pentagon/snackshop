@@ -32,8 +32,6 @@ public class Orderitem implements Serializable {
 
     private String oid;
 
-    private Double subtotal;
-
     private Integer count;
 
 

@@ -36,8 +36,6 @@ public class Product implements Serializable {
 
     private String des;
 
-    private String itemid;
-
     private String purl;
 
     private String pname;

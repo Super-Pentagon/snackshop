@@ -1,7 +1,13 @@
 package com.qcy.userservice.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -12,7 +18,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author CodeHunter_qcy
@@ -29,11 +35,12 @@ public class Orders implements Serializable {
     @TableId(value = "oid", type = IdType.ID_WORKER_STR)
     private String oid;
 
-    private Date time;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime time;
 
     private String bid;
 
-    private Double total;
+    private BigDecimal total;
 
     private Integer state;
 
