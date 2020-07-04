@@ -1,5 +1,6 @@
 package com.qcy.userservice.service;
 
+import com.qcy.userservice.entity.Buyer;
 import com.qcy.userservice.entity.Seller;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SellerService extends IService<Seller> {
 
+    Seller login(Seller seller);
+
+    void register(Seller seller);
 }

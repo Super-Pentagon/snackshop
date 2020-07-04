@@ -38,7 +38,12 @@ public class Product implements Serializable {
 
     private String purl;
 
+    private String thumbnailurl;
+
     private String pname;
+
+    private int monthlysales;
+
 
 
 }

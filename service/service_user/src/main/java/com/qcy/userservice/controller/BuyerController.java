@@ -39,6 +39,12 @@ public class BuyerController {
         buyerService.register(buyer);
         return R.ok();
     }
+    @ApiOperation(value = "退出登录")
+    @GetMapping("exit")
+    public R exit(String bid){
+        buyerService.exit(bid);
+        return R.ok();
+    }
 
 
 

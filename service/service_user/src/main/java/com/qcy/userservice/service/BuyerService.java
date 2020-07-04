@@ -16,4 +16,6 @@ public interface BuyerService extends IService<Buyer> {
     Buyer login(Buyer buyer);
 
     void register(Buyer buyer);
+
+    void exit(String bid);
 }

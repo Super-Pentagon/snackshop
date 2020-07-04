@@ -35,8 +35,12 @@ public class Buyer implements Serializable {
     private String tel;
 
     private String address;
+
     private String avatar;
+
     private String name;
+    // 登录位  0未登录  1登录
+    private int state;
 
 
 

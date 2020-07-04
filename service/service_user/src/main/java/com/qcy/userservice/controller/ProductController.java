@@ -48,6 +48,12 @@ public class ProductController {
         List<Product> products = productService.list(wrapper);
         return R.ok().data("products", products);
     }
+    @ApiOperation(value = "查询商品")
+    @GetMapping("getProductById/{pid}")
+    public R getProductById(@PathVariable String pid) {
+        Product product = productService.getById(pid);
+        return R.ok().data("product",product);
+    }
 
     @ApiOperation(value = "卖家上架商品")
     @PostMapping("addProduct")
@@ -74,7 +80,7 @@ public class ProductController {
 
     @ApiOperation(value = "卖家下架商品")
     @DeleteMapping("{pid}")
-    public R removeTeacher(@PathVariable String pid) {
+    public R removeProduct(@PathVariable String pid) {
         boolean flag = productService.removeById(pid);
         if (flag) {
             return R.ok();

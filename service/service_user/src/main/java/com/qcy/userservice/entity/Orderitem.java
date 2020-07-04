@@ -3,6 +3,8 @@ package com.qcy.userservice.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -33,6 +35,8 @@ public class Orderitem implements Serializable {
     private String oid;
 
     private Integer count;
+
+    private BigDecimal subtotal;
 
 
 }

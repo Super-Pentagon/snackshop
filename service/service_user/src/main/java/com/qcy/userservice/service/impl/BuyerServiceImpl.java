@@ -1,6 +1,7 @@
 package com.qcy.userservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.qcy.commonutils.MD5;
 import com.qcy.servicebase.exceptionhandler.QcyException;
 import com.qcy.userservice.entity.Buyer;
@@ -37,6 +38,8 @@ public class BuyerServiceImpl extends ServiceImpl<BuyerMapper, Buyer> implements
         if (!MD5.encrypt(password).equals(buyervo.getPassword())) {
             throw new QcyException(20001, "密码error");
         }
+        UpdateWrapper<Buyer> buyerUpdateWrapper = new UpdateWrapper<>();
+        buyerUpdateWrapper.eq("username",username).set("state",1);
         return buyervo;
     }
 
@@ -44,30 +47,30 @@ public class BuyerServiceImpl extends ServiceImpl<BuyerMapper, Buyer> implements
     public void register(Buyer buyer) {
         String username = buyer.getUsername();
         String password = buyer.getPassword();
+        System.out.println(username+"     " +password);
         if (StringUtils.isEmpty(password)
                 || StringUtils.isEmpty(username)) {
             throw new QcyException(20001, "注册失败");
         }
-        //判断验证码
-       /* //获取redis验证码
-        String redisCode = redisTemplate.opsForValue().get(mobile);
-        if(!code.equals(redisCode)) {
-            throw new GuliException(20001,"注册失败");
-        }*/
 
-        //判断手机号是否重复，表里面存在相同手机号不进行添加
         QueryWrapper<Buyer> wrapper = new QueryWrapper<>();
         wrapper.eq("username", username);
         Integer count = baseMapper.selectCount(wrapper);
         if (count > 0) {
-            throw new QcyException(20001, "注册失败");
+            throw new QcyException(20001, "注册失败,账号已存在");
         }
 
         //数据添加数据库中
-       Buyer buyervo = new Buyer();
+        Buyer buyervo = new Buyer();
         buyervo.setUsername(username);
-        buyervo.setPassword(password);
+        buyervo.setPassword(MD5.encrypt(password));
         buyervo.setAvatar("http://bpic.588ku.com/element_pic/01/58/79/95574840a476616.jpg");
         baseMapper.insert(buyervo);
+    }
+
+    @Override
+    public void exit(String bid) {
+        UpdateWrapper<Buyer> buyerUpdateWrapper = new UpdateWrapper<>();
+        buyerUpdateWrapper.eq("bid",bid).set("state",0);
     }
 }
