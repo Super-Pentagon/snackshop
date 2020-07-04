@@ -28,20 +28,20 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "pid", type = IdType.ID_WORKER_STR)
-    private String pid;
-
+    private String pid;//商品id
+    //商品价格
     private BigDecimal price;
-
+    //卖家id
     private String sid;
-
+    //商品描述
     private String des;
-
+    //图
     private String purl;
-
+    //缩略图
     private String thumbnailurl;
-
+    //商品名称
     private String pname;
-
+    //月销售
     private int monthlysales;
 
 
