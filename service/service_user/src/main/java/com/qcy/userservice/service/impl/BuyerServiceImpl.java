@@ -8,6 +8,7 @@ import com.qcy.userservice.entity.Buyer;
 import com.qcy.userservice.mapper.BuyerMapper;
 import com.qcy.userservice.service.BuyerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -72,5 +73,16 @@ public class BuyerServiceImpl extends ServiceImpl<BuyerMapper, Buyer> implements
     public void exit(String bid) {
         UpdateWrapper<Buyer> buyerUpdateWrapper = new UpdateWrapper<>();
         buyerUpdateWrapper.eq("bid",bid).set("state",0);
+    }
+
+    @Override
+    public void updatePswd(String bid,String newpswd) {
+        UpdateWrapper<Buyer> buyerUpdateWrapper = new UpdateWrapper<>();
+        buyerUpdateWrapper.eq("bid",bid);
+        Buyer buyer = baseMapper.selectOne(buyerUpdateWrapper);
+        buyer.setPassword(MD5.encrypt(newpswd));
+        baseMapper.updateById(buyer);
+
+
     }
 }

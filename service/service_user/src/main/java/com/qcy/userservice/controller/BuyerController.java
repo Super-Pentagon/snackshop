@@ -3,6 +3,7 @@ package com.qcy.userservice.controller;
 
 
 
+import com.qcy.commonutils.MD5;
 import com.qcy.commonutils.R;
 import com.qcy.userservice.entity.Buyer;
 import com.qcy.userservice.service.BuyerService;
@@ -45,6 +46,18 @@ public class BuyerController {
         buyerService.exit(bid);
         return R.ok();
     }
+    @ApiOperation(value = "修改密码")
+    @GetMapping("updatePswd/{bid}/{pswd}/{newpswd}")
+    public R updatePswd(@PathVariable  String bid,@PathVariable String pswd,@PathVariable String newpswd){
+
+        if (buyerService.getById(bid).getPassword().equals(MD5.encrypt(pswd))) {
+            buyerService.updatePswd(bid, newpswd);
+            return R.ok();
+
+        }
+        return R.error();
+    }
+
 
 
 

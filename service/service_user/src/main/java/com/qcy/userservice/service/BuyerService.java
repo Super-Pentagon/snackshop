@@ -18,4 +18,6 @@ public interface BuyerService extends IService<Buyer> {
     void register(Buyer buyer);
 
     void exit(String bid);
+
+    void updatePswd(String bid,String pswd);
 }
