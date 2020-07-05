@@ -27,6 +27,7 @@ import java.util.List;
 @Api(tags = "订单接口")
 @RestController
 @RequestMapping("/userservice/orders")
+@CrossOrigin
 public class OrdersController {
     @Autowired
     private OrderitemService orderitemService;
@@ -42,7 +43,7 @@ public class OrdersController {
      * @return
      */
     @ApiOperation(value = "提交订单")
-    @RequestMapping(value = "add", method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping("/addOrder")
     public R addOrder(@RequestBody Orderpayvo orderpayvo) {
         QueryWrapper<Orders> wrapper = new QueryWrapper<>();
         Orders orders = new Orders();
@@ -90,12 +91,11 @@ public class OrdersController {
      */
     @ApiOperation(value = "支付订单")
     @GetMapping("payOrder/{oid}")
-    private R payOrder(@PathVariable String oid) {
-        QueryWrapper<Orders> wrapper = new QueryWrapper<>();
+    public R payOrder(@PathVariable String oid) {
         Orders orders = ordersService.getById(oid);
-        wrapper.eq("oid", oid);
+        System.out.println(orders.getOid());
         orders.setState(1);
-        ordersService.update(orders, wrapper);
+        ordersService.updateById(orders);
         return R.ok();
     }
 
