@@ -4,6 +4,7 @@ package com.qcy.userservice.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.qcy.commonutils.R;
 import com.qcy.userservice.entity.Product;
+import com.qcy.userservice.entity.Productvo;
 import com.qcy.userservice.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,13 +42,30 @@ public class ProductController {
     @ApiOperation(value = "搜索商品")
     @GetMapping("getProductByStr/{key}")
     public R getProductByStr(@PathVariable String key) {
+        List<Productvo> productlist = new ArrayList<>();
         QueryWrapper<Product> wrapper = new QueryWrapper<>();
         if (!StringUtils.isEmpty(key)) {
             wrapper.like("pname", key);
-
         }
         List<Product> products = productService.list(wrapper);
-        return R.ok().data("products", products);
+
+        for (Product product:products){
+            Productvo productvo = new Productvo();
+            productvo.setId(product.getPid());
+            productvo.setPrice(product.getPrice());
+            productvo.setSellerId(product.getSid());
+            productvo.setDes(product.getDes());
+            productvo.setPictureUrl(product.getPurl());
+            productvo.setThumbnailUrl(product.getThumbnailurl());
+            productvo.setName(product.getPname());
+
+            productvo.setMonthlySales(product.getMonthlysales());
+            productvo.setDeliveryTime(32);
+
+
+            productlist.add(productvo);
+        }
+        return R.ok().data("productlist", productlist);
     }
     @ApiOperation(value = "查询商品")
     @GetMapping("getProductById/{pid}")

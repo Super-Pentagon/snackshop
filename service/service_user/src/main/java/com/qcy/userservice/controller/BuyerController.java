@@ -57,7 +57,12 @@ public class BuyerController {
         }
         return R.error();
     }
-
+    @ApiOperation(value = "根据id查用户")
+    @GetMapping("getBuyerById/{bid}")
+    public R getBuyerById(@PathVariable String bid){
+        Buyer buyervo = buyerService.getById(bid);
+        return R.ok().data("buyer",buyervo);
+    }
 
 
 
