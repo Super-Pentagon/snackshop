@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,39 +38,32 @@ public class OrdersController {
     /**
      * 只有提交订单的适合，才去set属性oid的值
      *
-     * @param list
+     * @param
      * @return
      */
     @ApiOperation(value = "提交订单")
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = "application/json")
-    public R addOrder(@RequestBody List<Orderitem> list) {
-
-
-        QueryWrapper<Orderitem> wrapper = new QueryWrapper<>();
-        QueryWrapper<Orders> wrapper1 = new QueryWrapper<>();
+    public R addOrder(@RequestBody Orderpayvo orderpayvo) {
+        QueryWrapper<Orders> wrapper = new QueryWrapper<>();
         Orders orders = new Orders();
+        orders.setTel(orderpayvo.getTel());
+        orders.setAddress(orderpayvo.getAddress());
+        orders.setTotal(orderpayvo.getTotal());
+        orders.setBid("1279088273653854209");
+        orders.setTime(LocalDateTime.now());
+        orders.setState(0);
+        //先创建订单
         ordersService.save(orders);
         String oid = orders.getOid();
-        BigDecimal total = new BigDecimal("0.00");
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setOid(oid);
-            String pid = list.get(i).getPid();
-            Product product = productService.getById(pid);
-            BigDecimal price = product.getPrice();
-            int n = list.get(i).getCount();
-            BigDecimal num = new BigDecimal(n);
-            total = total.add(price.multiply(num));
-            wrapper.eq("itemid", list.get(i).getItemid());
-            orderitemService.update(list.get(i), wrapper);
+        List<Orderitem> orderitemlist = orderpayvo.getOrderitemlist();
+        for (Orderitem o:orderitemlist){
+            //与订单绑定
+            o.setOid(oid);
+            // 写订单项入表
+            orderitemService.save(o);
         }
-        orders.setState(0);
-        orders.setAddress("默认地址");
-        orders.setTel("13000000000");
-        orders.setTotal(total);
-        orders.setTime(LocalDateTime.now());
-        orders.setBid("1111");
-        wrapper1.eq("oid", oid);
-        ordersService.update(orders, wrapper1);
+        wrapper.eq("oid", oid);
+        ordersService.update(orders, wrapper);
         return R.ok().data("orders", orders);
     }
 

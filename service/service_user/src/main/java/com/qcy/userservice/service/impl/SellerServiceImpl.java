@@ -1,6 +1,7 @@
 package com.qcy.userservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.qcy.commonutils.MD5;
 import com.qcy.servicebase.exceptionhandler.QcyException;
 import com.qcy.userservice.entity.Buyer;
@@ -61,7 +62,16 @@ public class SellerServiceImpl extends ServiceImpl<SellerMapper, Seller> impleme
         //数据添加数据库中
         Seller sellervo = new Seller();
         sellervo.setUsername(username);
-        sellervo.setPassword(password);
+        sellervo.setPassword(MD5.encrypt(password));
         baseMapper.insert(sellervo);
+    }
+
+    @Override
+    public void updatePswd(String sid, String newpswd) {
+        UpdateWrapper<Seller> buyerUpdateWrapper = new UpdateWrapper<>();
+        buyerUpdateWrapper.eq("sid",sid);
+        Seller seller = baseMapper.selectOne(buyerUpdateWrapper);
+        seller.setPassword(MD5.encrypt(newpswd));
+        baseMapper.updateById(seller);
     }
 }

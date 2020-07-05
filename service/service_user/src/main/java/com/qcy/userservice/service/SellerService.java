@@ -17,4 +17,6 @@ public interface SellerService extends IService<Seller> {
     Seller login(Seller seller);
 
     void register(Seller seller);
+
+    void updatePswd(String bid, String newpswd);
 }

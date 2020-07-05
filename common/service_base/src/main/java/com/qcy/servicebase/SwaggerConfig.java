@@ -29,8 +29,8 @@ public class SwaggerConfig {
 
     private ApiInfo webApiInfo(){
         return new ApiInfoBuilder()
-                .title("商城后台API文档")
-                .description("本文档描述了商城后台微服务接口定义")
+                .title("snackshop商城后台API文档")
+                .description("本文档描述了商城后台接口的详细定义,供小组使用，方便前后端交流")
                 .version("1.0")
                 .build();
     }
